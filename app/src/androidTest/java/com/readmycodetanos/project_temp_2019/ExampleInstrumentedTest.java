@@ -4,10 +4,16 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.readmycodetanos.project_temp_2019.api.HttpApp;
+import com.readmycodetanos.project_temp_2019.api.result.ContentBean;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import retrofit2.Call;
+import retrofit2.Response;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -23,4 +29,20 @@ public class ExampleInstrumentedTest {
 
         assertEquals("com.readmycodetanos.project_temp_2019", appContext.getPackageName());
     }
+
+
+    @Test
+    public void callApiTest()  {
+
+        Call<ContentBean> contents = HttpApp.getAppService().getContents();
+        Response<ContentBean> execute = null;
+        try {
+            execute = contents.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+//           Log.v("TNet", execute.body());
+        }
+        assertEquals(true, execute.isSuccessful());
+    }
+
 }
